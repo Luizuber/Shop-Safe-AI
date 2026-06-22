@@ -93,12 +93,12 @@ graph TD
 
 ## 📊 Funcionalidades Implementadas
 
-* [x] **Captura de Contexto:** Identificação automática de produtos visualizados na tela através do DOM.
-* [x] **Extração Inteligente:** Parsing de dados fundamentais (nome do produto, preço atual, loja).
-* [x] **Comparação Automatizada:** Busca e comparação de preços em diferentes marketplaces parceiros.
-* [x] **Reputação da Loja:** Cálculo e exibição de score de segurança/confiabilidade da loja em exibição.
-* [x] **Insights com IA:** Geração de sugestões e recomendações contextuais através da API Gemini.
-* [x] **Interface Integrada:** Design responsivo e limpo acoplado à página de e-commerce.
+* [ ] **Captura de Contexto:** Identificação automática de produtos visualizados na tela através do DOM.
+* [ ] **Extração Inteligente:** Parsing de dados fundamentais (nome do produto, preço atual, loja).
+* [ ] **Comparação Automatizada:** Busca e comparação de preços em diferentes marketplaces parceiros.
+* [ ] **Reputação da Loja:** Cálculo e exibição de score de segurança/confiabilidade da loja em exibição.
+* [ ] **Insights com IA:** Geração de sugestões e recomendações contextuais através da API Gemini.
+* [ ] **Interface Integrada:** Design responsivo e limpo acoplado à página de e-commerce.
 
 ---
 
