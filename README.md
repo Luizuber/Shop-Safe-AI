@@ -56,7 +56,6 @@ O sistema foi estruturado em três camadas principais para garantir escalabilida
 graph TD
     A[Extensão - Frontend React / Vite / TypeScript] -->|Requisições HTTP / API| B[Backend - NestJS / Node.js]
     B -->|Persistência de Dados| C[(Banco de Dados - PostgreSQL)]
-   
     B -->|Scraping / APIs Externas| E[Fontes de Preço Externas]
 ```
 
