@@ -10,9 +10,8 @@ O **Shop Safe AI** é uma extensão de navegador inteligente desenvolvida como T
 
 Assista à apresentação completa do projeto e demonstração da ferramenta no YouTube:
 
-[![Assista no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Vídeo-red?style=for-the-badge&logo=youtube)](INSIRA_O_LINK_DO_SEU_VIDEO_DO_YOUTUBE_AQUI)
+[![Assista no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Vídeo-red?style=for-the-badge&logo=youtube)](https://youtu.be/6_Q1_ZcjQ3w)
 
-> 💡 **Nota:** Substitua o link acima (`INSIRA_O_LINK_DO_SEU_VIDEO_DO_YOUTUBE_AQUI`) pela URL final do seu vídeo publicado no YouTube (ex: `https://www.youtube.com/watch?v=...`).
 
 ---
 
