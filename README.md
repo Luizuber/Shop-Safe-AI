@@ -21,7 +21,7 @@ Assista à apresentação completa do projeto e demonstração da ferramenta no 
 Os slides utilizados na defesa do TCC estão organizados no diretório `/slides` deste repositório.
 
 * 📄 [Acesse a pasta de slides aqui](./slides/)
-* 📥 **Instruções:** Adicione o seu arquivo de apresentação (como `.pdf` ou `.pptx`) dentro da pasta `slides/` para mantê-lo centralizado no repositório.
+
 
 ---
 
