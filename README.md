@@ -42,7 +42,7 @@ O **Shop Safe AI** resolve esses problemas integrando-se diretamente à experiê
 * **💰 Comparação de Preços:** Alternativas de ofertas em tempo real em outras plataformas confiáveis.
 * **🏪 Lojas Alternativas:** Sugestões qualificadas de e-commerce que oferecem o mesmo item.
 * **🔒 Análise de Confiabilidade:** Indicadores visuais sobre a reputação da loja e nível de segurança.
-* **🤖 Recomendações com IA:** Insights inteligentes gerados pelo modelo Google Gemini sobre o produto e oportunidade de compra.
+* **🤖 Recomendações com IA:** Insights inteligentes gerados sobre o produto e oportunidade de compra.
 
 Tudo isso concentrado em uma interface intuitiva, sem a necessidade de sair da página atual.
 
@@ -56,7 +56,7 @@ O sistema foi estruturado em três camadas principais para garantir escalabilida
 graph TD
     A[Extensão - Frontend React / Vite / TypeScript] -->|Requisições HTTP / API| B[Backend - NestJS / Node.js]
     B -->|Persistência de Dados| C[(Banco de Dados - PostgreSQL)]
-    B -->|Integração de IA| D[Google Gemini API]
+   
     B -->|Scraping / APIs Externas| E[Fontes de Preço Externas]
 ```
 
@@ -64,7 +64,7 @@ graph TD
 1. **Frontend (Extensão):** Desenvolvido em **React** com **Vite** e **TypeScript**, interagindo com a Chrome Extension API para manipulação da aba ativa e exibição da interface gráfica integrada (sidebar ou popup).
 2. **Backend (API):** Desenvolvido em **NestJS** e **Node.js**, atuando como orquestrador, responsável por consumir APIs externas, persistir dados e conectar com o ecossistema da Google AI.
 3. **Banco de Dados:** Utilização de **PostgreSQL** para o armazenamento de histórico de consultas, dados estruturados de produtos e logs de análise de confiabilidade.
-4. **Inteligência Artificial:** Integração via **API do Google Gemini** para processamento de linguagem natural (NLP), classificação de reviews e geração de recomendações de compra personalizadas.
+4. **Inteligência Artificial:** Integração via IA para processamento de linguagem natural (NLP), classificação de reviews e geração de recomendações de compra personalizadas.
 
 ---
 
@@ -86,7 +86,7 @@ graph TD
 * **PostgreSQL** - Banco de dados relacional de alta confiabilidade.
 
 ### Inteligência Artificial
-* **Google Gemini API** - Processamento inteligente das avaliações e análise contextual do produto.
+Processamento inteligente das avaliações e análise contextual do produto.
 
 ---
 
@@ -96,7 +96,7 @@ graph TD
 * [ ] **Extração Inteligente:** Parsing de dados fundamentais (nome do produto, preço atual, loja).
 * [ ] **Comparação Automatizada:** Busca e comparação de preços em diferentes marketplaces parceiros.
 * [ ] **Reputação da Loja:** Cálculo e exibição de score de segurança/confiabilidade da loja em exibição.
-* [ ] **Insights com IA:** Geração de sugestões e recomendações contextuais através da API Gemini.
+* [ ] **Insights com IA:** Geração de sugestões e recomendações contextuais.
 * [ ] **Interface Integrada:** Design responsivo e limpo acoplado à página de e-commerce.
 
 ---
