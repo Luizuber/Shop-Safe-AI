@@ -1,0 +1,31 @@
+{
+  "purpose": "Synthetic unit fixture for numerical parity ONLY, not pricing accuracy or a real market dataset",
+  "prices": [
+    5900.0,
+    6000.0,
+    6100.0,
+    6200.0,
+    6300.0,
+    6400.0
+  ],
+  "bandwidth": 0.03,
+  "lowerBound": 5681.634124048466,
+  "upperBound": 6649.036058036019,
+  "cases": [
+    {
+      "target": 659.9,
+      "percentile": 0.0,
+      "logDensity": -2665.211368854307
+    },
+    {
+      "target": 6150.0,
+      "percentile": 0.5025510861619564,
+      "logDensity": 2.222064462010644
+    },
+    {
+      "target": 7200.0,
+      "percentile": 0.9999920387795354,
+      "logDensity": -6.797553361366251
+    }
+  ]
+}
