@@ -1,0 +1,87 @@
+{
+  "dataSha256": "0a639fd03aea6308c5b1c10c92aa23c2ce1505447a9137271865cd0badc9a59a",
+  "rows": 100000,
+  "trainSamples": 64491,
+  "split": "64/16/20 grouped by conservative hostname suffix; canonical URLs deduplicated; conflicts removed",
+  "validation": {
+    "samples": 16705,
+    "threshold": 0.5,
+    "accuracy": 0.9950912900329243,
+    "precision": 1.0,
+    "recall": 0.9855633802816901,
+    "f1": 0.99272920730626,
+    "rocAuc": 0.9976748586758647,
+    "averagePrecision": 0.9975510691065819,
+    "brierScore": 0.004541680911220122,
+    "confusionMatrix": [
+      [
+        11025,
+        0
+      ],
+      [
+        82,
+        5598
+      ]
+    ]
+  },
+  "test": {
+    "samples": 18804,
+    "threshold": 0.5,
+    "accuracy": 0.9951606041267815,
+    "precision": 1.0,
+    "recall": 0.9883408071748879,
+    "f1": 0.9941362201172756,
+    "rocAuc": 0.9979292159749656,
+    "averagePrecision": 0.9982857609107914,
+    "brierScore": 0.00450520739926383,
+    "confusionMatrix": [
+      [
+        10999,
+        0
+      ],
+      [
+        91,
+        7714
+      ]
+    ]
+  },
+  "operatingThresholdTest": {
+    "samples": 18804,
+    "threshold": 0.8,
+    "accuracy": 0.9935651988938524,
+    "precision": 1.0,
+    "recall": 0.9844971172325433,
+    "f1": 0.9921880043902124,
+    "rocAuc": 0.9979292159749656,
+    "averagePrecision": 0.9982857609107914,
+    "brierScore": 0.00450520739926383,
+    "confusionMatrix": [
+      [
+        10999,
+        0
+      ],
+      [
+        121,
+        7684
+      ]
+    ]
+  },
+  "classes": {
+    "0": "benign_url",
+    "1": "phishing_url"
+  },
+  "iterations": [
+    9
+  ],
+  "datasetBias": "Retrospective URL dataset may encode HTTPS/path distribution artifacts. Domain-disjoint scores do not establish present-day ecommerce fraud accuracy.",
+  "artifactSha256": "c6f0f31735ed12900f62fdda65eb7df40ecc12f8fddb6404fdfa6a20c931e1bd",
+  "version": "security-v1-59baa1f8afaf",
+  "sklearnVersion": "1.7.2",
+  "source": {
+    "url": "https://archive.ics.uci.edu/static/public/967/phiusiil%2Bphishing%2Burl%2Bdataset.zip",
+    "citation": "Prasad, A.; Chandra, S. (2024). PhiUSIIL Phishing URL (Website). UCI, dataset 967.",
+    "license": "CC-BY-4.0"
+  },
+  "seed": 42,
+  "limitations": "Retrospective dataset; not an audit, not proof of legitimacy, no temporal validation."
+}

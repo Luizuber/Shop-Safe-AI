@@ -1,0 +1,63 @@
+{
+  "dataSha256": "821fb0bf9f7230b0fba4e4f9fadd75a66d1a9ff0b1657810791d33007eb2ab38",
+  "rows": 100000,
+  "trainSamples": 64231,
+  "split": "64/16/20 by product_id; normalized texts deduplicated and conflicting labels removed",
+  "validation": {
+    "samples": 15458,
+    "threshold": 0.5,
+    "accuracy": 0.9447535256824945,
+    "precision": 0.9789422610383309,
+    "recall": 0.9406060606060606,
+    "f1": 0.9593913456966239,
+    "rocAuc": 0.9856359430413941,
+    "averagePrecision": 0.9933601955427118,
+    "brierScore": 0.04303368104137296,
+    "confusionMatrix": [
+      [
+        4516,
+        217
+      ],
+      [
+        637,
+        10088
+      ]
+    ]
+  },
+  "test": {
+    "samples": 20311,
+    "threshold": 0.5,
+    "accuracy": 0.9458913889025651,
+    "precision": 0.9810375670840787,
+    "recall": 0.9426567656765676,
+    "f1": 0.9614642869665837,
+    "rocAuc": 0.9874928238662257,
+    "averagePrecision": 0.9947499200702319,
+    "brierScore": 0.041143028656802375,
+    "confusionMatrix": [
+      [
+        5502,
+        265
+      ],
+      [
+        834,
+        13710
+      ]
+    ]
+  },
+  "classes": {
+    "0": "rating_1_or_2",
+    "1": "rating_4_or_5"
+  },
+  "labelLimit": "Star rating is a noisy proxy for sentiment. Rating 3 excluded. Does not detect fake reviews.",
+  "artifactSha256": "e2d5939a09cb138a06f3ef9b4fbc8ef0e4ce4a9801131db2cb70108d68f4c9e6",
+  "version": "sentiment-v1-5fad2abae306",
+  "sklearnVersion": "1.7.2",
+  "source": {
+    "url": "https://raw.githubusercontent.com/americanas-tech/b2w-reviews01/main/B2W-Reviews01.csv",
+    "citation": "Real, L.; Oshiro, M.; Mafra, A. B2W-Reviews01: An Open Product Reviews Corpus (2019). B2W Digital.",
+    "license": "CC-BY-NC-SA-4.0 (academic/non-commercial model)"
+  },
+  "seed": 42,
+  "limitations": "Retrospective dataset; not an audit, not proof of legitimacy, no temporal validation."
+}
