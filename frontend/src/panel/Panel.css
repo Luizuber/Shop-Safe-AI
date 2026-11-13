@@ -1,0 +1,189 @@
+.ssa-panel-v2 {
+  position: absolute;
+  width: 360px;
+  height: 600px;
+  max-height: calc(100vh - 40px);
+  background: transparent;
+  z-index: 2147483647;
+  pointer-events: auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: normal;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.ssa-panel-v2,
+.ssa-panel-v2 * {
+  box-sizing: border-box;
+}
+
+.ssa-panel-v2 button,
+.ssa-panel-v2 input {
+  font: inherit;
+}
+
+.ssa-panel-v2 .uppercase {
+  text-transform: none !important;
+}
+
+.ssa-panel-v2 [class*="tracking-"] {
+  letter-spacing: normal !important;
+}
+
+.ssa-panel-v2 .font-black {
+  font-weight: 600 !important;
+}
+
+.ssa-panel-v2 .font-bold {
+  font-weight: 600 !important;
+}
+
+.ssa-panel-v2 [class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.ssa-panel-v2 [class*="hover:scale"]:hover {
+  transform: none !important;
+}
+
+.ssa-panel-v2 .pointer-events-none[class*="blur-"] {
+  display: none !important;
+}
+
+.ssa-panel-v2 .rounded-2xl {
+  border-radius: 12px !important;
+}
+
+.ssa-panel-v2.dragging {
+  cursor: grabbing;
+}
+
+.ssa-side-tab-host {
+  position: fixed;
+  top: clamp(120px, 24vh, calc(100vh - 120px));
+  right: 0;
+  width: 40px;
+  height: 84px;
+  z-index: 2147483647;
+  pointer-events: auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.ssa-side-tab {
+  position: relative;
+  width: 40px;
+  height: 84px;
+  padding: 0;
+  color: #2563eb;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-right: 0;
+  border-radius: 12px 0 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: -2px 4px 12px rgba(15, 23, 42, 0.12);
+  transition: border-color 140ms ease;
+}
+
+.ssa-side-tab svg {
+  transition: color 140ms ease, filter 140ms ease;
+}
+
+.ssa-side-tab:hover svg {
+  color: #1d4ed8;
+  filter: drop-shadow(0 0 3px rgba(37, 99, 235, 0.3));
+}
+
+.ssa-side-tab:focus-visible {
+  outline: none;
+  box-shadow: -2px 4px 12px rgba(15, 23, 42, 0.12), inset 0 0 0 2px #93c5fd;
+}
+
+.ssa-side-tab-host.dark .ssa-side-tab {
+  color: #93c5fd;
+  background: #1f2937;
+  border-color: #4b5563;
+  box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ssa-side-tab-host.dark .ssa-side-tab:hover svg {
+  color: #bfdbfe;
+  filter: drop-shadow(0 0 3px rgba(147, 197, 253, 0.35));
+}
+
+.ssa-side-tab-indicator {
+  position: absolute;
+  right: 4px;
+  width: 2px;
+  height: 24px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+.ssa-panel-v2 *::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ssa-panel-v2 *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ssa-panel-v2 *::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+
+.ssa-panel-v2 *::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.ssa-promo-plate {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  margin: 0 10px;
+  padding: 0 12px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.dark .ssa-promo-plate {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.ssa-brand-name {
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dark .ssa-brand-name {
+  color: #f3f4f6;
+}
+
+.ssa-brand-caption {
+  color: #6b7280;
+  font-size: 10px;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dark .ssa-brand-caption {
+  color: #9ca3af;
+}

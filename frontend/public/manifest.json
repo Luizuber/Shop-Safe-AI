@@ -1,0 +1,57 @@
+{
+    "manifest_version": 3,
+    "name": "Shop Safe",
+    "version": "1.2.1",
+    "description": "Informações de segurança, preço e avaliações para compras online",
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://tcc-shop-safe.onrender.com/*"
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content-loader.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "action": {
+        "default_title": "Shop Safe",
+        "default_icon": "icon128.png"
+    },
+    "commands": {
+        "toggle-panel": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+S"
+            },
+            "description": "Abrir ou fechar o painel Shop Safe"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/*",
+                "index.html",
+                "content.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

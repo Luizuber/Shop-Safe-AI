@@ -1,0 +1,220 @@
+import { Settings as SettingsIcon, ChevronRight, ChevronDown, ChevronUp, AlertTriangle, Minus, FileText, Clock } from 'lucide-react';
+import { useState } from 'react';
+import { TrustScore } from './TrustScore';
+import { WarningBadge } from './WarningBadge';
+import { StoreAnalysis, AlternativeSeller } from '../../types/AnalysisResult';
+import { useSettings } from '../context/SettingsContext';
+import { useTheme } from '../context/ThemeContext';
+import { getColors } from '../themeColors';
+import { isGoogleShoppingUrl } from '../../utils/offerLinks';
+
+interface ExtensionPopupProps {
+    analysis: StoreAnalysis;
+    alternativeSellers: AlternativeSeller[];
+    onViewDetails: () => void;
+    onViewPrices: () => void;
+    onViewHistory: () => void;
+    onOpenSettings: () => void;
+    onMinimize: () => void;
+}
+
+import { PromotionPlate } from './PromotionPlate';
+
+export function ExtensionPopup({ analysis, alternativeSellers: _, onViewDetails, onViewPrices, onViewHistory, onOpenSettings, onMinimize }: ExtensionPopupProps) {
+    const [isAiSummaryExpanded, setIsAiSummaryExpanded] = useState(true);
+    const { minTrustScore, showWarnings } = useSettings();
+    const { theme } = useTheme();
+    const c = getColors(theme);
+
+    const displayPrices = analysis.bestPrices?.map(bp => ({
+        id: bp.link,
+        storeName: bp.store,
+        price: bp.price,
+        percentageDifference: analysis.currentPrice ? ((bp.price - analysis.currentPrice) / analysis.currentPrice) * 100 : 0,
+        link: bp.link
+    })) || [];
+
+    const isLowTrust = analysis.trustScore < minTrustScore;
+
+    return (
+        <div className="h-full flex flex-col overflow-hidden" style={{ background: c.bgPrimary, color: c.textPrimary }}>
+            {/* Header */}
+            <div className="flex items-center justify-between px-2 py-3.5 transition-colors relative overflow-hidden ssa-drag-handle cursor-grab active:cursor-grabbing" style={{ background: c.bgHeader, borderBottom: `1px solid ${c.borderPrimary}` }}>
+                {/* Left: Minimize */}
+                <button onClick={onMinimize} className="p-1.5 rounded-md transition-all flex items-center justify-center group relative z-10 ml-1"
+                    style={{
+                        background: 'transparent',
+                        border: 'none',
+                        color: 'var(--host-accent, #00b8d4)'
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'scale(1)'; }} aria-label="Minimizar">
+                    <Minus className="w-3.5 h-3.5" />
+                </button>
+
+                {/* Promotion Plate (Middle) */}
+                <PromotionPlate speed={45} />
+
+                <button onClick={onViewHistory} className="p-1.5 rounded-md transition-all flex items-center justify-center group relative z-10"
+                    style={{
+                        background: 'transparent',
+                        border: 'none',
+                        color: 'var(--host-accent, #00b8d4)'
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'scale(1)'; }} aria-label="Historico">
+                    <Clock className="w-3.5 h-3.5" />
+                </button>
+
+                {/* Right: Settings */}
+                <button onClick={onOpenSettings} className="p-1.5 rounded-md transition-all flex items-center justify-center group relative z-10 mr-1"
+                    style={{
+                        background: 'transparent',
+                        border: 'none',
+                        color: 'var(--host-accent, #00b8d4)'
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'scale(1)'; }} aria-label="Settings">
+                    <SettingsIcon className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform duration-300" />
+                </button>
+            </div>
+
+            {/* Main Content */}
+            <div className="flex-1 overflow-y-auto px-4 pt-4 pb-20">
+                {isLowTrust && showWarnings && (
+                    <div className="mb-4 p-3 rounded-xl flex items-center gap-3" style={{ background: c.warningBg, border: `1px solid ${c.warningBorder}` }}>
+                        <div className="p-2 rounded-lg" style={{ background: `${c.scoreRed}33` }}>
+                            <AlertTriangle className="w-5 h-5" style={{ color: c.scoreRed }} />
+                        </div>
+                        <div className="flex-1">
+                            <p className="text-xs font-bold" style={{ color: c.warningText }}>Risco Identificado</p>
+                            <p className="text-[10px] font-medium" style={{ color: `${c.warningText}b3` }}>Pontuação abaixo do seu limite ({minTrustScore})</p>
+                        </div>
+                    </div>
+                )}
+
+                <div className="mb-4">
+                    <TrustScore score={analysis.trustScore} riskLevel={analysis.riskLevel} size="large" colors={c} />
+                </div>
+
+                {/* AI Analysis */}
+                <div className="mb-4">
+                    <div className="w-full rounded-xl p-4 transition-all text-left" style={{ background: c.bgCard, border: `1px solid ${c.borderPrimary}` }}>
+                        <button onClick={() => setIsAiSummaryExpanded(!isAiSummaryExpanded)} className="w-full flex items-center justify-between mb-1">
+                            <h3 className="font-bold flex items-center gap-2" style={{ color: c.textLabel }}>
+                                <div className="p-1.5 rounded-lg" style={{ background: 'var(--host-accent, #00b8d4)1a' }}>
+                                    <FileText className="w-3.5 h-3.5" style={{ color: c.accent }} />
+                                </div>
+                                <span className="text-xs">Resumo da análise</span>
+                            </h3>
+                            {isAiSummaryExpanded
+                                ? <ChevronUp className="w-5 h-5" style={{ color: c.textMuted }} />
+                                : <ChevronDown className="w-5 h-5" style={{ color: c.textMuted }} />}
+                        </button>
+                        {isAiSummaryExpanded && (
+                            <div className="mt-3 pt-3" style={{ borderTop: `1px solid ${c.borderSubtle}` }}>
+                                {analysis.aiSummary ? (
+                                    <div className="text-sm leading-relaxed" style={{ color: c.textSecondary }}>
+                                        {analysis.aiSummary.includes('•') || analysis.aiSummary.includes('\n') ? (
+                                            <ul className="space-y-1.5">
+                                                {analysis.aiSummary.split(/[•\n]/).filter(s => s.trim()).map((line, i) => (
+                                                    <li key={i} className="flex items-start gap-2">
+                                                        <span style={{ color: c.accent }} className="mt-0.5">•</span>
+                                                        <span>{line.trim()}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p>{analysis.aiSummary}</p>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <p className="text-sm italic" style={{ color: c.textMuted }}>Análise indisponível no momento.</p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Better Prices */}
+                <div className="mb-4">
+                    <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold" style={{ color: c.textLabel }}>Comparação de Preços</h3>
+                        {displayPrices.length > 0 && (
+                            <button onClick={onViewPrices} className="text-[11px] font-bold uppercase tracking-tight" style={{ color: c.accent }}>Ver Tudo</button>
+                        )}
+                    </div>
+
+                    {displayPrices.length > 0 ? (
+                        <div className="space-y-2">
+                            {displayPrices.slice(0, 5).map((seller, index) => {
+                                const rankText = index === 0 ? 'Menor preço' : null;
+                                const usesGoogleFallback = isGoogleShoppingUrl(seller.link);
+
+                                return (
+                                    <a key={seller.id} href={seller.link || '#'} target="_blank" rel="noopener noreferrer"
+                                        className="block w-full rounded-xl p-3.5 transition-colors text-left relative overflow-hidden"
+                                        style={{ background: c.bgCard, border: `1px solid ${index === 0 ? c.borderAccent : c.borderSubtle}` }}>
+
+                                        {index === 0 && (
+                                            <div className="absolute left-0 top-0 bottom-0 w-[3px]" style={{ background: c.accent }}></div>
+                                        )}
+
+                                        <div className="w-full mb-2 flex items-center justify-between gap-2 relative z-10">
+                                            {rankText && <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: c.accentSubtle, color: c.accent }}>{rankText}</span>}
+                                            <span className="text-[10px] ml-auto" style={{ color: c.textMuted }}>{usesGoogleFallback ? 'Acesso via Google Shopping' : 'Link direto da loja'}</span>
+                                        </div>
+
+                                        <div className="flex items-center justify-between relative z-10">
+                                            <div className="flex-1 min-w-0">
+                                                <div className="font-semibold text-sm mb-0.5 truncate uppercase" style={{ color: c.textPrimary, paddingRight: '20px' }}>{seller.storeName}</div>
+                                                <div className="text-xs font-medium" style={{ color: c.priceGreen }}>
+                                                    {seller.percentageDifference < 0
+                                                        ? <span>-{Math.abs(seller.percentageDifference).toFixed(1)}% (Economize R$ {(analysis.currentPrice - seller.price).toFixed(2)})</span>
+                                                        : <span>+{Math.abs(seller.percentageDifference).toFixed(1)}% (+ R$ {(seller.price - analysis.currentPrice).toFixed(2)})</span>}
+                                                </div>
+                                            </div>
+                                            <div className="text-lg font-bold" style={{ color: c.textPrimary }}>R$ {seller.price.toFixed(2)}</div>
+                                        </div>
+                                    </a>
+                                )
+                            })}
+                        </div>
+                    ) : (
+                        <div className="rounded-xl p-4 text-center" style={{ background: c.bgSecondary, border: `1px solid ${c.borderSubtle}` }}>
+                            <p className="text-xs italic" style={{ color: c.textMuted }}>Nenhuma outra oferta encontrada.</p>
+                        </div>
+                    )}
+                </div>
+
+                {/* Warning Badges */}
+                {analysis.warnings.length > 0 && (
+                    <div className="mb-4">
+                        <h3 className="text-sm font-semibold mb-3" style={{ color: c.textLabel }}>Alertas Detectados</h3>
+                        <div className="flex flex-col gap-2">
+                            {analysis.warnings.map((warning, idx) => (
+                                <WarningBadge key={idx} colors={c} warning={{
+                                    id: String(idx),
+                                    type: (warning as any).type?.toLowerCase() || 'low-reputation',
+                                    label: (warning as any).message || 'Analise cuidadosa necessária',
+                                    description: ''
+                                }} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Footer with CTA */}
+            <div className="px-4 py-3" style={{ background: c.bgFooter, borderTop: `1px solid ${c.borderPrimary}` }}>
+                <button onClick={onViewDetails}
+                    className="w-full font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
+                    style={{ background: c.btnPrimaryBg, color: theme === 'dark' ? '#e0e6f0' : '#ffffff', border: `1px solid ${c.btnPrimaryBorder}`, boxShadow: c.btnPrimaryGlow }}>
+                    <span className="text-sm">Abrir Análise Completa</span>
+                    <ChevronRight className="w-4 h-4" /><ChevronRight className="w-4 h-4 -ml-3" />
+                </button>
+                <p className="text-[10px] text-center mt-2.5" style={{ color: c.textMuted }}>Shop Safe · Informações para sua decisão</p>
+            </div>
+        </div>
+    );
+}
