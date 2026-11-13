@@ -1,0 +1,25 @@
+name: Relatar problema
+description: Erro de captura, análise, preço, modelo ou interface.
+body:
+  - type: markdown
+    attributes:
+      value: Não inclua senhas, tokens, arquivos .env ou dados pessoais. Para vulnerabilidades, siga SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Versão e ambiente
+      description: Informe versão da extensão e se utiliza API local ou publicada.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Como reproduzir
+      description: Descreva o produto/cenário e o resultado esperado e observado. Remova parâmetros privados de URLs.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidências sem informações sensíveis
+      description: Mensagem de erro, captura ou status dos modelos, sem credenciais.
