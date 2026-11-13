@@ -1,0 +1,24 @@
+{
+	"nodes":[
+		{"id":"visao","type":"file","file":"01 - Visão e requisitos.md","x":0,"y":0,"width":330,"height":220},
+		{"id":"dados","type":"file","file":"03 - Captação e qualidade dos dados.md","x":420,"y":0,"width":330,"height":220},
+		{"id":"arquitetura","type":"file","file":"02 - Arquitetura.md","x":840,"y":0,"width":350,"height":220},
+		{"id":"security","type":"file","file":"04 - Segurança e phishing.md","x":0,"y":340,"width":330,"height":260},
+		{"id":"price","type":"file","file":"05 - Preços e ofertas.md","x":420,"y":340,"width":330,"height":260},
+		{"id":"reviews","type":"file","file":"06 - Avaliações e sentimento.md","x":840,"y":340,"width":350,"height":260},
+		{"id":"train","type":"file","file":"07 - Treinamento e reprodução.md","x":0,"y":730,"width":330,"height":240},
+		{"id":"metrics","type":"file","file":"08 - Métricas e evidências.md","x":420,"y":730,"width":330,"height":240},
+		{"id":"api","type":"file","file":"09 - Contrato da API.md","x":840,"y":730,"width":350,"height":240},
+		{"id":"deploy","type":"file","file":"10 - Instalação e publicação.md","x":420,"y":1100,"width":330,"height":230}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"visao","fromSide":"right","toNode":"dados","toSide":"left"},
+		{"id":"e2","fromNode":"dados","fromSide":"right","toNode":"arquitetura","toSide":"left"},
+		{"id":"e3","fromNode":"arquitetura","fromSide":"bottom","toNode":"security","toSide":"top"},
+		{"id":"e4","fromNode":"arquitetura","fromSide":"bottom","toNode":"price","toSide":"top"},
+		{"id":"e5","fromNode":"arquitetura","fromSide":"bottom","toNode":"reviews","toSide":"top"},
+		{"id":"e6","fromNode":"train","fromSide":"right","toNode":"metrics","toSide":"left"},
+		{"id":"e7","fromNode":"metrics","fromSide":"right","toNode":"api","toSide":"left"},
+		{"id":"e8","fromNode":"api","fromSide":"bottom","toNode":"deploy","toSide":"top"}
+	]
+}

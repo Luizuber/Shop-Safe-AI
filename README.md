@@ -1,127 +1,138 @@
-# 🛒 Shop Safe AI
+# Shop Safe AI
 
-## 📌 Sobre o Projeto
+Extensão Chrome desenvolvida como Trabalho de Conclusão de Curso em Engenharia de Software no Centro Universitário Católica de Santa Catarina. Reúne informações de uma oferta, compara preços e apresenta sinais de risco e análise de sentimento dos comentários disponíveis.
 
-O **Shop Safe AI** é uma extensão de navegador inteligente desenvolvida como Trabalho de Conclusão de Curso (TCC) para o curso de Engenharia de Software no Centro Universitário Católica de Santa Catarina. O objetivo principal é auxiliar usuários durante suas compras online, facilitando a tomada de decisão por meio de análises em tempo real de preços, confiabilidade de lojas e sugestões inteligentes baseadas em Inteligência Artificial.
+O sistema combina **regras de validação e modelos próprios de machine learning**. A pontuação é apoio à decisão, não uma certificação da loja ou garantia de compra.
 
----
+## Demonstração e documentação
 
-## 📺 Apresentação em Vídeo e Demonstração
+- [Apresentação do projeto no YouTube](https://youtu.be/6_Q1_ZcjQ3w) — material acadêmico; pode representar uma versão anterior.
+- [Slides da apresentação](slides/Shop-Safe-AI.pdf).
+- [Cofre Obsidian: início](docs/obsidian-shop-safe/00%20-%20In%C3%ADcio.md).
+- [Arquitetura e fluxo de dados](docs/obsidian-shop-safe/02%20-%20Arquitetura.md).
+- [Model card e reprodução dos experimentos](ml/MODEL_CARD.md).
+- [Métricas, limitações e evidências](docs/obsidian-shop-safe/08%20-%20M%C3%A9tricas%20e%20evid%C3%AAncias.md).
+- [README original do repositório acadêmico](docs/historico/README-original-do-repositorio.md).
 
-Assista à apresentação completa do projeto e demonstração da ferramenta no YouTube:
+## Estado da implementação
 
-[![Assista no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Vídeo-red?style=for-the-badge&logo=youtube)](https://youtu.be/6_Q1_ZcjQ3w)
+| Componente | Implementado |
+| --- | --- |
+| Extensão | React, TypeScript, Vite, Manifest V3; captura DOM/JSON-LD, painel e histórico local |
+| API | NestJS, validação de entrada, CORS configurável, rate limiting e consultas SerpAPI |
+| Segurança | Regressão logística de domínio treinada em PhiUSIIL, combinada com regras |
+| Avaliações | TF-IDF + regressão logística treinada em português com B2W-Reviews01 |
+| Preços | KDE ajustado por consulta com pelo menos 5 lojas independentes |
+| Persistência | Até 50 análises no navegador; PostgreSQL ainda planejado |
+| Publicação | Código e modelos versionados; confirmar a versão efetivamente implantada no servidor |
 
+Não há integração com ChatGPT/Gemini na análise e não ocorre retreinamento automático a cada acesso. O modelo de domínio não autentica vendedor/produto, e o sentimento não verifica comentários falsos.
 
----
+## Estrutura
 
-## 🛝 Slides da Apresentação
-
-Os slides utilizados na defesa do TCC estão organizados no diretório `/slides` deste repositório.
-
-* 📄 [Acesse a pasta de slides aqui](./slides/)
-
-
----
-
-## 🚨 O Problema
-
-Consumidores enfrentam diversos desafios e riscos ao realizar compras no comércio eletrônico (e-commerce), tais como:
-
-1. **Dificuldade em comparar preços:** Necessidade de navegar por múltiplos sites e abas para encontrar a melhor oferta.
-2. **Falta de transparência na confiabilidade:** Dificuldade em identificar rapidamente se uma loja ou vendedor é seguro e legítimo.
-3. **Fadiga de decisão:** Excesso de abas abertas e informações dispersas que atrasam a compra.
-4. **Segurança digital:** Risco crescente de golpes, fraudes e páginas de e-commerce falsas.
-
----
-
-## 💡 A Solução Proposta
-
-O **Shop Safe AI** resolve esses problemas integrando-se diretamente à experiência de navegação do usuário. Ao acessar a página de um produto, a extensão automaticamente captura e analisa as informações relevantes para exibir:
-
-* **💰 Comparação de Preços:** Alternativas de ofertas em tempo real em outras plataformas confiáveis.
-* **🏪 Lojas Alternativas:** Sugestões qualificadas de e-commerce que oferecem o mesmo item.
-* **🔒 Análise de Confiabilidade:** Indicadores visuais sobre a reputação da loja e nível de segurança.
-* **🤖 Recomendações com IA:** Insights inteligentes gerados sobre o produto e oportunidade de compra.
-
-Tudo isso concentrado em uma interface intuitiva, sem a necessidade de sair da página atual.
-
----
-
-## ⚙️ Arquitetura do Sistema
-
-O sistema foi estruturado em três camadas principais para garantir escalabilidade, segurança e bom desempenho:
-
-```mermaid
-graph TD
-    A[Extensão - Frontend React / Vite / TypeScript] -->|Requisições HTTP / API| B[Backend - NestJS / Node.js]
-    B -->|Persistência de Dados| C[(Banco de Dados - PostgreSQL)]
-    B -->|Scraping / APIs Externas| E[Fontes de Preço Externas]
+```text
+backand/backend-api/    API, inferência e modelos JSON
+frontend/              Extensão e builds local/externo
+ml/                    Treinamento Python, relatórios e model card
+docs/                  Documentação, diagramas e cofre Obsidian
+slides/                Apresentação acadêmica já existente
+scripts/               Verificação de arquivos privados e credenciais
+.github/               Integração contínua e templates de colaboração
 ```
 
-### Detalhamento das Camadas
-1. **Frontend (Extensão):** Desenvolvido em **React** com **Vite** e **TypeScript**, interagindo com a Chrome Extension API para manipulação da aba ativa e exibição da interface gráfica integrada (sidebar ou popup).
-2. **Backend (API):** Desenvolvido em **NestJS** e **Node.js**, atuando como orquestrador, responsável por consumir APIs externas, persistir dados e conectar com o ecossistema da Google AI.
-3. **Banco de Dados:** Utilização de **PostgreSQL** para o armazenamento de histórico de consultas, dados estruturados de produtos e logs de análise de confiabilidade.
-4. **Inteligência Artificial:** Integração via IA para processamento de linguagem natural (NLP), classificação de reviews e geração de recomendações de compra personalizadas.
+O nome histórico `backand` foi mantido para compatibilidade com os caminhos existentes.
 
----
+## Requisitos
 
-## 🧠 Tecnologias Utilizadas
+- Node.js 24 e npm.
+- Python 3.11 apenas para treinamento e verificações científicas; o backend usa os modelos JSON já versionados.
+- Chrome/Chromium para carregar a extensão sem compactação.
+- Chave SerpAPI no ambiente do backend para pesquisar ofertas. Sem ela, o servidor retorna ausência de ofertas, sem inventar preços.
 
-### Frontend (Extensão)
-* **React** - Biblioteca para construção da interface.
-* **TypeScript** - Tipagem estática para maior segurança e produtividade.
-* **Vite** - Build tool rápido para desenvolvimento moderno.
-* **TailwindCSS** (ou similar) - Framework utilitário de estilização.
-* **Chrome Extension API** - Integração nativa com o navegador.
+## Executar a API
 
-### Backend
-* **NestJS** - Framework progressivo Node.js estruturado em arquitetura modular.
-* **Node.js** - Ambiente de execução Javascript no servidor.
-* **TypeScript** - Linguagem principal do backend.
+```text
+cd backand/backend-api
+npm ci
+npm run build
+npm run start:prod
+```
 
-### Banco de Dados
-* **PostgreSQL** - Banco de dados relacional de alta confiabilidade.
+Endereço local: `http://localhost:3000`. Rotas:
 
-### Inteligência Artificial
-Processamento inteligente das avaliações e análise contextual do produto.
+- `POST /analysis`: dados do produto, sinais de risco, modelos e comparação.
+- `GET /analysis/models`: status, versões, fontes e métricas dos modelos.
+- `GET /`: resposta básica; não comprova funcionamento das consultas externas.
 
----
+Configure as variáveis no sistema ou em arquivo local **não versionado**:
 
-## 📊 Funcionalidades Implementadas
+| Variável | Uso |
+| --- | --- |
+| `SERP_API_KEY` | Credencial privada do serviço de busca |
+| `PORT` | Porta da API; padrão 3000 |
+| `NODE_ENV` | Ambiente de execução |
+| `CORS_ORIGINS` | Origens das páginas permitidas, separadas por vírgula |
+| `EXTENSION_ID` | Origem específica da extensão quando aplicável |
+| `SERP_DIRECT_LINK_LIMIT` | Limite de consultas detalhadas; padrão 5, máximo 10 |
+| `SERP_ORGANIC_LINK_LIMIT` | Fallback orgânico; padrão 5, máximo 10; zero desativa |
+| `ANALYSIS_RATE_LIMIT` | Limite por minuto; padrão 20 |
 
-* [ ] **Captura de Contexto:** Identificação automática de produtos visualizados na tela através do DOM.
-* [ ] **Extração Inteligente:** Parsing de dados fundamentais (nome do produto, preço atual, loja).
-* [ ] **Comparação Automatizada:** Busca e comparação de preços em diferentes marketplaces parceiros.
-* [ ] **Reputação da Loja:** Cálculo e exibição de score de segurança/confiabilidade da loja em exibição.
-* [ ] **Insights com IA:** Geração de sugestões e recomendações contextuais.
-* [ ] **Interface Integrada:** Design responsivo e limpo acoplado à página de e-commerce.
+Para testar a partir de uma loja, sua origem precisa ser autorizada em `CORS_ORIGINS`. Não enviar credenciais para o frontend. Consulte as [instruções de publicação](docs/obsidian-shop-safe/10%20-%20Instala%C3%A7%C3%A3o%20e%20publica%C3%A7%C3%A3o.md).
 
----
+## Executar a extensão
 
-## 🚀 Possíveis Evoluções (Roadmap)
+```text
+cd frontend
+npm ci
+npm run build:local
+```
 
-* [ ] **Aplicativo Mobile:** Versão móvel com leitura de código de barras ou imagem via câmera.
-* [ ] **Alertas Ativos:** Notificações em tempo real sobre quedas de preço e cupons de desconto.
-* [ ] **Histórico Dinâmico:** Gráfico interativo com a oscilação de preço do produto ao longo do tempo.
-* [ ] **Análise de Reviews:** Inteligência artificial processando comentários de compradores para resumir pontos positivos e negativos.
-* [ ] **Detector de Golpes Avançado:** Filtro anti-phishing usando IA para detectar sites clonados e fraudes financeiras.
+Em `chrome://extensions`, ativar o modo de desenvolvedor e carregar a pasta `frontend/dist-local`. Esse pacote aparece como **Shop Safe (Local)** e acessa `http://localhost:3000/analysis`. Desative outra cópia da extensão durante o teste.
 
----
+`npm run build` gera `frontend/dist` para a API externa configurada. A URL padrão é `https://tcc-shop-safe.onrender.com`; `VITE_API_BASE_URL` pode alterá-la durante o build. Os pacotes local e externo ficam separados. A versão atual é 1.2.1.
 
-## 📚 Referências e Trabalhos Relacionados
+## Treinar os modelos
 
-O desenvolvimento deste TCC buscou referências em soluções consolidadas de mercado e literatura acadêmica sobre comércio eletrônico:
-* **Extensões de comparação e cupons:** Análise do funcionamento de ferramentas populares como *Buscapé*, *Méliuz* e *PriceBlink*.
-* **Histórico de preços:** Estudo sobre o comportamento de trackers como *Keepa* (para a Amazon).
-* **Análise de sentimento com Processamento de Linguagem Natural:** Trabalhos acadêmicos voltados à extração de reviews de e-commerce para classificação de opinião de consumidores.
+Na raiz, em PowerShell:
 
----
+```powershell
+python -m venv .venv-ml
+.\.venv-ml\Scripts\python.exe -m pip install -r ml/requirements.txt
+.\.venv-ml\Scripts\python.exe ml/train.py --model all --limit 100000
+.\.venv-ml\Scripts\python.exe ml/verify_price.py
+```
 
-## 👨‍💻 Autor
+Linux/macOS: usar `.venv-ml/bin/python` no lugar de `.venv-ml\Scripts\python.exe`. Dados brutos são baixados para `ml/data` e ficam fora do Git. Treino/validação/teste são separados por grupos. Os relatórios registram fontes, hashes e métricas. Não é necessário retreinar para executar os modelos já incluídos.
 
-**Luiz Eduardo Uber**
-* 🎓 Curso: Engenharia de Software
-* 🏫 Instituição: Centro Universitário Católica de Santa Catarina
-* 📧 Contato: [Adicione seu e-mail ou perfil do LinkedIn aqui]
+No teste retrospectivo, o classificador de domínio v2 teve acurácia de **95,82% no limiar operacional 0,8**, em 18.294 casos; sentimento teve **94,59% no limiar binário 0,5**, em 20.311 casos. Esses números não representam acurácia de todas as fraudes de compra. O modelo anterior foi retirado por falsos positivos e permanece documentado como histórico.
+
+## Verificações
+
+```text
+# Dentro de backand/backend-api
+npm test -- --runInBand
+npm run test:e2e -- --runInBand
+npm run build
+
+# Dentro de frontend
+npm test
+npm run build
+
+# Na raiz, após o build do backend
+node ml/smoke-built.cjs
+node docs/validate-vault.mjs
+node scripts/check-secrets.mjs --history
+```
+
+A CI executa verificações de API, extensão, modelos e documentação. Não baixa bases brutas nem treina automaticamente. Os arquivos `.env`, segredos, ambientes virtuais e builds são excluídos. Veja [CONTRIBUTING.md](CONTRIBUTING.md) e [SECURITY.md](SECURITY.md).
+
+## Dados, licenças e limites
+
+- PhiUSIIL: CC BY 4.0, com atribuição registrada.
+- B2W-Reviews01: **CC BY-NC-SA 4.0**. O modelo de sentimento derivado é destinado a uso acadêmico/não comercial, conforme registrado no model card. Uso comercial exige outra base ou autorização adequada.
+- Esta publicação não concede uma licença geral de uso do código que não tenha sido definida pelo autor; as condições das fontes de terceiros permanecem aplicáveis.
+- PostgreSQL, feedback rotulado, avaliação temporal/externa de fraude e autenticação de comentários permanecem pendentes. Consulte o [roteiro](docs/obsidian-shop-safe/14%20-%20Pend%C3%AAncias%20e%20roteiro.md).
+
+## Autor
+
+**Luiz Eduardo Uber** — Engenharia de Software, Centro Universitário Católica de Santa Catarina.
